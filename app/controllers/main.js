@@ -19,18 +19,26 @@
 var auth = require('../helpers/auth')
   , requireAuth = auth.requireAuth;
 
+var userservice = require('../services/userservice');
+
+
 var Main = function () {
 
 	this.before(requireAuth, {});
 
 	this.index = function (req, resp, params) {
-		this.respond({params: params}, {
-			format: 'html'
-			, template: 'app/views/main/index'
-		});
+    var self = this;
+    userservice.loadUserFromSession(self.session, function(err, user) {
+      if (user) {
+        user.getFeeds(function(err, feeds) {
+          self.respond({params: params, user: user, feeds: feeds}, {
+            format: 'html'
+            , template: 'app/views/main/index'
+          });
+        });
+      }
+    });
 	};
 }
 
 exports.Main = Main;
-
-

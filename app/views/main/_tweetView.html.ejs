@@ -1,0 +1,38 @@
+<div id="feedWarning">
+    <% if (!feeds || feeds.length == 0) { %>
+    <div class="alert alert-danger alert-dismissable">
+        <h4 class="alert-heading">Oh snap! You don't have any feeds!</h4>
+        <p>You can't start tweeting until you have at least one feed to post the tweet to. You can view as many tweets as you like, but it won't be nearly as interesting until you can post your own.</p>
+    </div>
+    <% } else { %>
+    <div id="newTweet">
+        <!-- the new tweet form is only rendered if there is a feed to post a tweet to -->
+        <div>
+            <form id="tweetForm">
+                <!-- make sure the currently selected feed is passed on the request -->
+
+
+                <textarea value="" style="margin-top: 10px; margin-bottom: 20px; width: 90%; font-size: 16pt" rows="3" placeholder="Compose a new tweet ..."></textarea><br/>
+                <!-- AJAX submission similar to the creation of a new feed -->
+                <input type="submit" value="Tweet" class="btn btn-primary"/>
+            </form>
+        </div>
+    </div>
+    <h3>Tweets</h3>
+    <!-- iterator for the tweet collection -->
+    <div id="tweets">
+            <!-- Note, if I would use tweet display elsewhere in the app
+                 I would have impemented a custom tag for this. -->
+            <div class="well">
+                <h3>
+                  <!--
+                    <small>Posted by #{tweet.belongsTo.owner.name} in
+                        #{tweet.belongsTo.name} at
+                        <span></span>
+                    </small><br />
+                    #{tweet.content} -->
+                </h3>
+            </div>
+    </div>
+    <% } %>
+</div>
