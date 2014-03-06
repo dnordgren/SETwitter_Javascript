@@ -7,5 +7,5 @@ exports.requireAuth = function () {
     this.session.set('successRedirect', this.request.url);
     this.redirect('/user/login');
   }
-  
+
 };

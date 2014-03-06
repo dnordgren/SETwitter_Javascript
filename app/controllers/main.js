@@ -20,7 +20,7 @@ var auth = require('../helpers/auth')
   , requireAuth = auth.requireAuth;
 
 var userservice = require('../services/userservice');
-
+var feedservice = require('../services/feedservice');
 
 var Main = function () {
 
@@ -31,9 +31,12 @@ var Main = function () {
     userservice.loadUserFromSession(self.session, function(err, user) {
       if (user) {
         user.getFeeds(function(err, feeds) {
-          self.respond({params: params, user: user, feeds: feeds}, {
-            format: 'html'
-            , template: 'app/views/main/index'
+          var selectedFeed = -1;
+          feedservice.getTweetsToDisplay(feeds, selectedFeed, function(tweets) {
+            self.respond({params: params, user: user, feeds: feeds, tweets: tweets, selectedFeed: selectedFeed}, {
+              format: 'html'
+              , template: 'app/views/main/index'
+            });
           });
         });
       }

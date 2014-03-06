@@ -9,7 +9,11 @@
         <!-- the new tweet form is only rendered if there is a feed to post a tweet to -->
         <div>
             <form id="tweetForm">
-                <!-- make sure the currently selected feed is passed on the request -->
+                <%- selectTag(feeds, selectedFeed, {
+                  name: 'postFeed'
+                , valueField: 'id'
+                , textField: 'name'
+                }); %>
 
 
                 <textarea value="" style="margin-top: 10px; margin-bottom: 20px; width: 90%; font-size: 16pt" rows="3" placeholder="Compose a new tweet ..."></textarea><br/>
@@ -21,8 +25,8 @@
     <h3>Tweets</h3>
     <!-- iterator for the tweet collection -->
     <div id="tweets">
-            <!-- Note, if I would use tweet display elsewhere in the app
-                 I would have impemented a custom tag for this. -->
+            <% if (tweets) {
+              tweets.forEach(function(tweet) { %>
             <div class="well">
                 <h3>
                   <!--
@@ -33,6 +37,7 @@
                     #{tweet.content} -->
                 </h3>
             </div>
+            <% });} %>
     </div>
     <% } %>
 </div>

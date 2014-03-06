@@ -1,7 +1,7 @@
 var userservice = require('../services/userservice');
 
 var User = function () {
-	
+
 	this.login = function (req, resp, params) {
 		this.respond({params: params, newuser: params
 			, loginname: params['loginname']
@@ -13,10 +13,10 @@ var User = function () {
 	};
 
 	this.authenticate = function(req, resp, params) {
-		var self = this; 
+		var self = this;
 		userservice.authenticate(params['loginname'], params['loginpassword'], function(err, user) {
 			if (err) {
-				params.errors = err; 
+				params.errors = err;
 		   		self.transfer('login');
 			} else {
 				self.session.set('userId', user.id);
@@ -31,16 +31,16 @@ var User = function () {
 	};
 
 	this.newUser = function(req, resp, params) {
-		var self = this; 
+		var self = this;
 
 		if ( params['confirmpassword'] != params['password']) {
-			params.errors = {password: 'Passwords do not match'}; 
+			params.errors = {password: 'Passwords do not match'};
 			self.transfer('login');
 		} else {
 			var user = geddy.model.User.create(params);
-			userservice.createUser(user, function(err, user) { 
+			userservice.createUser(user, function(err, user) {
 				if (err) {
-					params.errors = err; 
+					params.errors = err;
 		   			self.transfer('login');
 				} else {
 					self.session.set('userId', user.id);
@@ -52,5 +52,3 @@ var User = function () {
 }
 
 exports.User = User;
-
-
